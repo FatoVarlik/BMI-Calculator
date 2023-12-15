@@ -2,54 +2,51 @@ from tkinter import *
 
 window = Tk()
 window.title("BMI Calculator")
-window.minsize(width=450, height=300)
+window.config(padx=30,pady=30)
 
-label_1 = Label(text="Height", font=("Arial",12,"bold"))
-label_1.place(x=225-56/2, y=20)
-# label_1.update()
-# print(label_1.winfo_height())
-# print(label_1.winfo_width())
+height_label = Label(text="Enter Height(cm)", font=("Arial", 12, "normal"))
+height_label.pack()
 
-entry_1 = Entry(width=20)
-entry_1.place(x=225-124/2, y=50)
-#entry_1.update()
-# print(entry_1.winfo_height())
-# print(entry_1.winfo_width())
+height_entry = Entry(width=20)
+height_entry.pack()
 
-label_2 = Label(text="Weight", font=("Arial",12,"bold"))
-label_2.place(x=225-59/2, y=80)
-# label_2.update()
-# print(label_2.winfo_height())
-# print(label_2.winfo_width())
+weight_label = Label(text="Enter Weight(kg)", font=("Arial",12,"normal"))
+weight_label.pack()
 
-entry_2 = Entry(width=20)
-entry_2.place(x=225-124/2, y=110)
-# entry_2.update()
-# print(entry_2.winfo_height())
-# print(entry_2.winfo_width())
+weight_entry = Entry(width=20)
+weight_entry.pack()
 
+result_label = Label()
+result_label.pack()
 
 def calculate():
-    Height = entry_1.get()
-    Height = float(Height) / 100
-    Weight = entry_2.get()
-    BMI = float(Weight) / Height ** 2
-    print(BMI)
+    Height = height_entry.get()
+    Weight = weight_entry.get()
 
-    if BMI < 18.5:
-        print("Düşük Kilolusunuz.")
-    elif BMI < 25:
-        print("Normalsiniz.")
-    elif BMI < 30:
-        print("Fazla Kilolusunuz.")
+    if Height == "" or Weight == "":
+        result_label.config(text="Please enter both Height and Weight!")
     else:
-        print("Obezsiniz.")
+        try:
+            BMI = float(Weight) / (float(Height) / 100) ** 2
+            string = result(BMI)
+            result_label.config(text=string)
+        except:
+            result_label.config(text="Please enter valid number!")
+
+def result(BMI):
+    string =f"Your BMI is: {BMI}. "
+    if BMI < 18.5:
+        string += "You are Underweight."
+    elif BMI < 25:
+        string += "You are Normal."
+    elif BMI < 30:
+        string += "You are Overweight."
+    else:
+        string += "You are Obese."
+    return string
 
 
 button = Button(text="Calculate",font=("Arial",12,"normal"),command=calculate)
-button.place(x=225-79/2, y=150)
-# button.update()
-# print(button.winfo_height())
-# print(button.winfo_width())
+button.pack()
 
 window.mainloop()
