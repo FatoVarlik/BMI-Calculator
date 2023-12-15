@@ -34,7 +34,7 @@ def calculate():
             result_label.config(text="Please enter valid number!")
 
 def result(BMI):
-    string =f"Your BMI is: {BMI}. "
+    string =f"Your BMI is: {round(BMI,2)} . "
     if BMI < 18.5:
         string += "You are Underweight."
     elif BMI < 25:
